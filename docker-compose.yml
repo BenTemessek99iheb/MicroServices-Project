@@ -28,7 +28,7 @@ services:
     networks:
       - bored-network
     environment:
-      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_ROOT_PASSWORD=
       - MYSQL_DATABASE=event_data_base
     volumes:
       - eventVolume:/var/lib/mysql
@@ -40,7 +40,7 @@ services:
     networks:
       - bored-network
     environment:
-      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_ROOT_PASSWORD=
       - MYSQL_DATABASE=reclamation_data_base
     volumes:
       - reclamationVolume:/var/lib/mysql
@@ -75,16 +75,6 @@ services:
       - clubVolume:/var/lib/postgresql/data
     ports:
       - "5433:5432"
-  nodeDB:
-    container_name: nodeDB-container
-    image: mongo
-    restart: always
-    networks:
-      - bored-network
-    volumes:
-      - nodeVolume:/data/db
-    ports:
-      - "27018:27017"
   courseDB:
     container_name: courseDB-container
     image: mongo
@@ -223,22 +213,7 @@ services:
       - eureka.instance.leaseExpirationDurationInSeconds=30
       - spring.data.mongodb.uri=mongodb://courseDB:27017/course
       - spring.data.mongodb.database=course
-  node-service:
-    build:
-      context: ./node-service
-      dockerfile: Dockerfile
-    container_name: node-container
-    image: node-image
-    restart: always
-    networks:
-      - bored-network
-    depends_on:
-      - eureka-server
-      - nodeDB
-    environment:
-      - EUREKA_HOST=eureka-server
-      - EUREKA_PORT=8761  
-      - DB_URI=mongodb://nodeDB:27017/classDB    
+
   api-gateway:
     build:
       context: ./cloud-gateway-api
@@ -299,6 +274,5 @@ volumes:
   clubVolume:
   forumVolume:
   courseVolume:
-  nodeVolume:
   
   
