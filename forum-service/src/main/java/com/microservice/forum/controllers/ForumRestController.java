@@ -34,8 +34,8 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 
 @RestController
-@RequestMapping("forums")
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/forums")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ForumRestController {
 
     @Autowired
@@ -43,6 +43,7 @@ public class ForumRestController {
     @Autowired
     UserClient userClient;
 
+    @CrossOrigin(origins = "http://localhost:4200")
 
     @PostMapping
     public ResponseEntity<Forum> addForum(@RequestBody Forum forum) {
@@ -50,6 +51,7 @@ public class ForumRestController {
         return new ResponseEntity<Forum>(iForumService.addForum(forum), HttpStatus.CREATED);
 
     }
+    @CrossOrigin(origins = "http://localhost:4200")
 
     @PutMapping
     public ResponseEntity<Forum> update(@RequestBody Forum forum) {
@@ -57,6 +59,7 @@ public class ForumRestController {
         return new ResponseEntity<Forum>(iForumService.updateForum(forum), HttpStatus.OK);
 
     }
+    @CrossOrigin(origins = "http://localhost:4200")
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") int id) {
@@ -64,6 +67,7 @@ public class ForumRestController {
         return new ResponseEntity<>("Forum deleted", HttpStatus.OK);
 
     }
+    @CrossOrigin(origins = "http://localhost:4200")
 
     @GetMapping("/{id}")
     public ResponseEntity<Forum> findById(@PathVariable("id") int id) {
@@ -71,6 +75,7 @@ public class ForumRestController {
         return new ResponseEntity<Forum>(iForumService.getForumById(id), HttpStatus.OK);
 
     }
+    @CrossOrigin(origins = "http://localhost:4200")
 
     @GetMapping
     public ResponseEntity<List<ForumResponse>> getAllForums() {
@@ -78,6 +83,7 @@ public class ForumRestController {
         return new ResponseEntity<List<ForumResponse>>(iForumService.getAllForums(), HttpStatus.OK);
 
     }
+    @CrossOrigin(origins = "http://localhost:4200")
 
     @GetMapping("/forum/{id}")
     public ResponseEntity<List<Post>> getPostsByForum(@PathVariable("id") int id) {
@@ -85,6 +91,7 @@ public class ForumRestController {
         return new ResponseEntity<List<Post>>(iForumService.getPostByForum(id), HttpStatus.OK);
 
     }
+    @CrossOrigin(origins = "http://localhost:4200")
 
     @PutMapping("/forum/{id}")
     public ResponseEntity<ForumResponse> assignPostsToForums(@PathVariable("id") int id, @RequestBody Post post) {

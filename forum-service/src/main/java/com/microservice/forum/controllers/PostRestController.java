@@ -21,8 +21,8 @@ import com.microservice.forum.entities.Post;
 import com.microservice.forum.services.IPostService;
 
 @RestController
-@RequestMapping("posts")
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/posts")
+@CrossOrigin(origins = "http://localhost:4200")
 public class PostRestController {
 
 	@Autowired

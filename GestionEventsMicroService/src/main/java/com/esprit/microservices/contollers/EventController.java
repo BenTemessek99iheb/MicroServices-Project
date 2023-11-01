@@ -30,7 +30,7 @@ import com.esprit.microservices.services.IServiceEvent;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @RestController
 @RequestMapping("/events")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:4200")
 public class EventController {
 
 	@Autowired
@@ -42,37 +42,37 @@ public class EventController {
 	@Autowired
 	ReclamationClient reclamationClient ;
 	
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping("/add")
 	public ResponseEntity<Event> addEvent (@RequestBody Event event,HttpServletRequest request){
 	    return new ResponseEntity<Event>(serviceEvent.addEvent(event),HttpStatus.CREATED);		
 	}
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "http://localhost:4200")
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Event> updateEvent (@PathVariable("id") int id,@RequestBody Event event){
 		return new ResponseEntity<Event>(serviceEvent.updateEvent(id, event),HttpStatus.OK);
 	}
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "http://localhost:4200")
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> deleteEvent (@PathVariable("id") int id){
 		return new ResponseEntity<String>(serviceEvent.deleteEvent(id),HttpStatus.OK);
 	}
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/all")
 	public ResponseEntity<List<Event>>getEvents(){
 		return new ResponseEntity<List<Event>>(serviceEvent.getEvents(),HttpStatus.OK);
 	}
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/{id}")
 	public ResponseEntity<Event>getEvent(@PathVariable("id")int id){
 		return new ResponseEntity<Event>(serviceEvent.getEvent(id),HttpStatus.OK);
 	}
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/title")
 	public ResponseEntity<List<Event>>getEventsByTitle(@RequestParam("title")String title){
 		return new ResponseEntity<List<Event>>(serviceEvent.getEventByTitle(title),HttpStatus.OK);
 	}
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/date")
 	public ResponseEntity<List<Event>>getEventsByDate(@RequestParam("date1")@DateTimeFormat(pattern = "dd-MM-yyyy") Date date1,@RequestParam("date2")@DateTimeFormat(pattern = "dd-MM-yyyy") Date date2){
 		return new ResponseEntity<List<Event>>(serviceEvent.getEventByDate(date1,date2),HttpStatus.OK);
