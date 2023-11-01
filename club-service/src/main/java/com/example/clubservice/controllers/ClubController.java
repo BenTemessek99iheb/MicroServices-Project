@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/clubs")
@@ -57,15 +58,55 @@ public class ClubController {
         }
     }
 
-    @PutMapping
-    public ResponseEntity<Club> updateClub(@RequestBody Club club) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Club> updateClub(@RequestBody Club updateClub, @PathVariable("id") Long id) {
         try {
-            Club newClub = clubService.updateClub(club);
-            return new ResponseEntity<>(newClub, HttpStatus.OK);
+            Optional<Club> optionalOldClub = clubService.getClubById(id);
+            if (optionalOldClub.isPresent()) {
+                Club oldClub = optionalOldClub.get();
+
+                // Update properties only if they are provided in the request body
+                if (updateClub.getName() != null) {
+                    oldClub.setName(updateClub.getName());
+                }
+                if (updateClub.getDescription() != null) {
+                    oldClub.setDescription(updateClub.getDescription());
+                }
+                if (updateClub.getCreationDate() != null) {
+                    oldClub.setCreationDate(updateClub.getCreationDate());
+                }
+                if (updateClub.getLocation() != null) {
+                    oldClub.setLocation(updateClub.getLocation());
+                }
+                if (updateClub.getOwner() != null) {
+                    oldClub.setOwner(updateClub.getOwner());
+                }
+                if (updateClub.getEmail() != null) {
+                    oldClub.setEmail(updateClub.getEmail());
+                }
+                if (updateClub.getPhone() != null) {
+                    oldClub.setPhone(updateClub.getPhone());
+                }
+                if (updateClub.getWebsite() != null) {
+                    oldClub.setWebsite(updateClub.getWebsite());
+                }
+                if (updateClub.getLogo() != null) {
+                    oldClub.setLogo(updateClub.getLogo());
+                }
+                if (updateClub.getGoals() != null) {
+                    oldClub.setGoals(updateClub.getGoals());
+                }
+
+                clubService.updateClub(oldClub);
+                return new ResponseEntity<>(oldClub, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteClub(@PathVariable("id") Long id) {
